@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "Bibit Backoffice API",
+    "title": "Backoffice API",
     "description": ""
   },
   "host": "localhost:3000/backoffice",
@@ -21,6 +21,43 @@
   "consumes": [],
   "produces": [],
   "paths": {
+    "/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Login",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "type": "string",
+                  "example": "fargan"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "password"
+                }
+              },
+              "required": [
+                "user",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
     "/user": {
       "get": {
         "tags": [
@@ -70,6 +107,45 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "get user detail is success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "username": {
+                  "type": "string",
+                  "example": "fargan"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "fargan@mail.com"
+                },
+                "phone_code": {
+                  "type": "number",
+                  "example": 62
+                },
+                "phone_number": {
+                  "type": "string",
+                  "example": "999999999999999"
+                },
+                "status": {
+                  "type": "number",
+                  "example": 1
+                },
+                "authy_id": {
+                  "type": "string",
+                  "example": "4282830"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
           "401": {
             "description": "Unauthorized"
           },
