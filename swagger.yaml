@@ -1,0 +1,168 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Backoffice-bibit API
+  description: Bibit Backoffice API
+servers:
+  - url: http://localhost:3000/backoffice
+
+tags:
+  - name: Authentication
+  - name: User
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+  schemas:
+    GetAdminDetail:
+      title: GetAdminDetail
+      required:
+        - user_id
+        - username
+        - email
+        - phone_code
+        - phone_number
+        - status
+      type: object
+      properties:
+        user_id:
+          type: integer
+          format: int32
+        username:
+          type: string
+        email:
+          type: string
+        phone_code:
+          type: integer
+          format: int32
+        phone_number:
+          type: string
+        status:
+          type: integer
+          format: int32
+      example:
+        user_id: 1
+        username: fargan
+        email: fargan@mail.com
+        phone_code: 62
+        phone_number: '999999999999999'
+        status: 1
+paths:
+  /login:
+    post:
+      tags:
+        - Authentication
+      summary: Login User
+      description: Login User
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+                - user
+                - password
+              type: object
+              properties:
+                user: 
+                  example: fargan
+                password: 
+                  example: password
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              example:
+                message: 'Login Success'
+                data: 
+                  id: 1,
+                  username: fargan,
+                  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6IjEtOWVkNjY0NTctYmY4My00MDgxLWI0NjQtMmU2MjNiMDlmYTllIiwidXNlciI6eyJpZCI6MSwidXNlcm5hbWUiOiJmYXJnYW4iLCJwZXJtaXNzaW9uIjoiMTIzIiwiZXhwaXJlX2RhdGUiOiIyMDIxLTA2LTA2IDE5OjA1OjQ2In0sImlhdCI6MTYyMjk0ODc0Nn0.dS7c8p-B6SaoKffP7_73tmY1DySDPGEheiPqdf2RptI"
+                
+        '422':
+          description: Unprocessable Entity
+  /user:
+    get:
+      tags:
+        - User
+      summary: Get list of user
+      description: Get list of user
+      parameters: []
+      responses:
+        '200': 
+          description: ''
+          content:
+            application/json:
+              example:
+                message: 'Get users is success'
+                data:
+                  - 
+                    user_id: 1
+                    username: fargan
+                    email: "fargan@mail.com"
+                    phone_code: 62
+                    phone_number: "99999999999"
+                    status: 1
+                    access_key: "09bf6ef1-030d-4c48-8d66-097e826563a3"
+                    access_identity: "1-947142df-a0b6-482f-b6b3-3d23c6fa972d"
+                    access_expire: "2021-06-06 19:21:30"
+                    authy_id: "4282830"
+                  - 
+                    user_id: 1
+                    username: fargan
+                    email: "fargan@mail.com"
+                    phone_code: 62
+                    phone_number: "99999999999"
+                    status: 1
+                    access_key: "09bf6ef1-030d-4c48-8d66-097e826563a3"
+                    access_identity: "1-947142df-a0b6-482f-b6b3-3d23c6fa972d"
+                    access_expire: "2021-06-06 19:21:30"
+                    authy_id: "4282830"                  
+
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '422':
+          description: Unprocessable Entity
+      security:
+        - apiKeyAuth: []
+  /user/{id}:
+    get:
+      tags: 
+        - User
+      summary: Get detail of user
+      description: ''
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAdminDetail'
+              example:
+                user_id: 1
+                username: fargan
+                email: fargan@mail.com
+                phone_code: 62
+                phone_number: '999999999999999'
+                status: 1            
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '422':
+          description: Unprocessable Entity
+      security:
+        - apiKeyAuth: []      
